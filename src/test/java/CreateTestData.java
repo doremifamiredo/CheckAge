@@ -77,6 +77,22 @@ public class CreateTestData {
         drivingExperience.put(LocalDate.now().minusYears(5).minusDays(r.nextInt(1800)).format(DateTimeFormatter.ofPattern("ddMMyyyy")), 500);
         drivingExperience.put(LocalDate.now().minusYears(10).format(DateTimeFormatter.ofPattern("ddMMyyyy")), 300);
         drivingExperience.put(LocalDate.now().minusYears(10).minusDays(r.nextInt(2000)).format(DateTimeFormatter.ofPattern("ddMMyyyy")), 300);
+        try {
+            File file = new File("DrivingExperienceTestData.txt");
+            if (!file.createNewFile()) {
+                file.delete();
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileWriter writer = new FileWriter("DrivingExperienceTestData.txt");
+            writer.write(drivingExperience.keySet().toString().replaceAll("\\[|\\]|,", "").replaceAll(" ", "\n"));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return drivingExperience;
     }
 }
